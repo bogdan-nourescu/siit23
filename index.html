@@ -10,6 +10,68 @@
       .icon {
         width: 30px;
         height: 30px;
+        display: inline-block;
+      }
+      .big {
+        color: rgb(255, 0, 0);
+        font-size: 20px;
+        width: 50px;
+        height: 50px;
+      }
+      nav {
+        font-size: 15px;
+      }
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      #secondaryNav .icon {
+        padding: 0;
+        margin: 0;
+      }
+      #secondaryNav > .icon {
+        padding: 0;
+        margin: 0;
+      }
+      #secondaryNav > div .icon {
+        padding: 0;
+        margin: 0;
+      }
+      .big.icon {
+        padding: 0;
+      }
+      [type="search"] {
+        padding: 0;
+      }
+      [type] {
+        padding: 0;
+      }
+      input[type="search"] {
+        padding: 0;
+      }
+      input.fancy[type="search"] {
+        padding: 0;
+      }
+      .clasa1,
+      .clasa2 {
+        padding: 0;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin-top: 20px;
+        width: 50%;
+      }
+      .icon:not(.big) {
+      }
+      .icon:not(.hidden) {
+      }
+      li:nth-child(odd) {
+      }
+      li:nth-child(even) {
       }
     </style>
   </head>
@@ -22,9 +84,14 @@
         <button>Paid Courses</button>
         <button>Log in</button>
       </nav>
+      <font></font>
       <nav id="secondaryNav">
         <button>
-          <img class="icon" src="images/hamburger icon.png" alt="open menu" />
+          <img
+            class="icon big"
+            src="images/hamburger icon.png"
+            alt="open menu"
+          />
         </button>
         <button>
           <img class="icon" src="images/hamburger icon.png" alt="open menu" />
