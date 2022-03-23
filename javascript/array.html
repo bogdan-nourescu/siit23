@@ -201,6 +201,21 @@
         return str;
       }
       console.log(pattern());
+
+      function pattern2() {
+        let str = "";
+        let p = 0;
+        for (let i = 0; i < 16; i++) {
+          str += p;
+          if (i % 4 === 3) {
+            str += "\n";
+          } else {
+            p = (p + 1) % 2;
+          }
+        }
+        return str;
+      }
+      console.log(pattern2());
     </script>
   </head>
   <body></body>
