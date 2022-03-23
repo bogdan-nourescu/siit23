@@ -18,7 +18,9 @@
     <script>
       function addInput() {
         let inputContainer = document.querySelector("#inputContainer");
-        inputContainer.innerHTML += `<input type="text" />`;
+        //varianta de evitat pentru ca sterge tot htmlul si il recreeaza
+        //inputContainer.innerHTML += `<input type="text" />`;
+        inputContainer.insertAdjacentHTML('beforeend', `<input type="text" />`);
       }
       function sum(){
         let inputs = document.querySelectorAll("#inputContainer > input");
