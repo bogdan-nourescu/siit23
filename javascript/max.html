@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM</title>
+    <style>
+      input.error {
+        border: 2px solid red;
+        background-color: rgb(253, 183, 183);
+        color: black;
+      }
+    </style>
+    <script>
+      function max(a, b) {
+        if (a > b) {
+          return a;
+        }
+        return b;
+      }
+      function clickMe() {
+        let aInput = document.querySelector("#a");
+        let bInput = document.querySelector("#b");
+        let a = Number(aInput.value);
+        let b = Number(bInput.value);
+        if (isNaN(a)) {
+          //inseamna ca utilizatorul nu a scris ce trebuie in casuta a;
+          aInput.classList.add("error");
+        } else {
+          aInput.classList.remove("error");
+        }
+        if (isNaN(b)) {
+          //inseamna ca utilizatorul nu a scris ce trebuie in casuta b;
+          bInput.classList.add("error");
+        } else {
+          bInput.classList.remove("error");
+        }
+        let m = max(a, b);
+        let div = document.querySelector("#result");
+        div.innerHTML = `Maximul dintre ${a} si ${b} este <b>${m}</b>`;
+      }
+    </script>
+  </head>
+  <body>
+    <input type="text" id="a" placeholder="First number" />
+    <input type="text" id="b" placeholder="Second number" />
+
+    <button onclick="clickMe();">Click me !</button>
+    <div id="result">............</div>
+  </body>
+</html>

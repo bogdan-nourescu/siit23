@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Input</title>
+    <style>
+      #inputContainer {
+        float: left;
+        width: 200px;
+      }
+      #inputContainer > input {
+        width: 100%;
+        box-sizing: border-box;
+      }
+    </style>
+    <script>
+      function addInput() {
+        let inputContainer = document.querySelector("#inputContainer");
+        inputContainer.innerHTML += `<input type="text" />`;
+      }
+      function sum(){
+        let inputs = document.querySelectorAll("#inputContainer > input");
+        let s = 0;
+        for(let input of inputs){
+            let n = Number(input.value);
+            if(!isNaN(n)){
+                s+=n;
+            }
+        }
+        document.querySelector("#result").innerHTML=`Suma numerelor este: ${s}`;
+      }
+    </script>
+  </head>
+  <body>
+    <div id="inputContainer">
+      <input type="text" />
+    </div>
+    <button onclick="addInput();">+</button>
+    <button onclick="sum();">Calculeaza !</button>
+    <span id="result"></button>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Indice masa corporala</title>
+    <style>
+      input.error {
+        border: 2px solid red;
+        background-color: rgb(253, 183, 183);
+        color: black;
+      }
+    </style>
+    <script>
+      //greutate 30 si 250
+      //inaltime 1 si 2.2
+      function indiceMasaCorporala(greutate, inaltime) {
+        let imc = greutate / (inaltime * inaltime);
+        let tip;
+        if (imc < 20) {
+          tip = "subponderal";
+        } else if (imc < 25) {
+          tip = "normal";
+        } else if (imc < 30) {
+          tip = "supraponderal";
+        } else if (imc < 40) {
+          tip = "obez";
+        } else {
+          tip = "bolnav";
+        }
+
+        return tip;
+      }
+      function clickMe() {
+        let greutateInput = document.querySelector("#greutate");
+        let inaltimeInput = document.querySelector("#inaltime");
+        let greutate = Number(greutateInput.value);
+        let inaltime = Number(inaltimeInput.value);
+        if (isNaN(greutate) || greutate < 30 || greutate > 250) {
+          greutateInput.classList.add("error");
+        } else {
+          greutateInput.classList.remove("error");
+        }
+        if (isNaN(inaltime) || inaltime < 1 || inaltime > 2.2) {
+          inaltimeInput.classList.add("error");
+        } else {
+          inaltimeInput.classList.remove("error");
+        }
+        let indice = indiceMasaCorporala(greutate, inaltime);
+        let div = document.querySelector("#result");
+        div.innerHTML = `La greutatea de <b>${greutate}kg</b> 
+        si inaltimea de <b>${inaltime}m</b> 
+        esti <b>${indice}</b>`;
+      }
+    </script>
+  </head>
+  <body>
+    <input type="text" id="greutate" placeholder="Greutate kg" />
+    <input type="text" id="inaltime" placeholder="Inaltime m" />
+
+    <button onclick="clickMe();">Calculeaza indicele de masa corporala</button>
+    <div id="result"></div>
+  </body>
+</html>
