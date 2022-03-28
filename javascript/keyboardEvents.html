@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KeyBoard Events</title>
+    <style></style>
+    <script>
+      function preventAllButDigits(input, event) {
+        if (event.key >= "0" && event.key <= "9") {
+          //inseamna ca a tastat un numar
+        } else {
+          event.preventDefault();
+        }
+        console.log(input, event);
+      }
+    </script>
+  </head>
+  <body>
+    <input
+      type="text"
+      oninput="console.log('oninput'+this.value)"
+      onkeydown="console.log('onkeydown'+this.value)"
+      onkeyup="console.log('onkeyup'+this.value)"
+      onkeypress="console.log('onkeypress'+this.value);preventAllButDigits(this,event)"
+      onchange="console.log('onchange'+this.value)"
+    />
+  </body>
+</html>

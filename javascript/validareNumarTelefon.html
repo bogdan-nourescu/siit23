@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KeyBoard Events</title>
+    <style>
+      input.error {
+        border: 2px solid red;
+        background-color: rgb(253, 183, 183);
+        color: black;
+      }
+      input.error[type="radio"],
+      input.error[type="checkbox"] {
+        outline: 2px solid red;
+      }
+      .errorMessage {
+        color: red;
+      }
+    </style>
+    <script>
+      function valideazaTelefon(input) {
+        let valid = true;
+        if (input.value.length > 0) {
+          for (let ch of input.value) {
+            if (ch < "0" || ch > "9") {
+              valid = false;
+            }
+          }
+          valid = valid && input.value.length === 10;
+        }
+
+        showError(input, valid, "Numarul de telefon nu este de 10 cifre");
+      }
+      function valideazaNume(input) {
+        let valid = input.value.length >= 3;
+        showError(
+          input,
+          valid,
+          "Numele trebuie sa fie de cel putin 3 caractere"
+        );
+      }
+      function valideazaPrenume(input) {
+        let valid = input.value.length >= 3;
+        showError(
+          input,
+          valid,
+          "Prenumele trebuie sa fie de cel putin 3 caractere"
+        );
+      }
+      function showError(input, valid, message) {
+        let span = input.nextElementSibling;
+        if (valid) {
+          input.classList.remove("error");
+          span.innerHTML = "";
+        } else {
+          input.classList.add("error");
+          span.innerHTML = message;
+        }
+      }
+      function valideazaFormular(event) {
+        event.preventDefault();
+
+        let firstname = document.querySelector("[name='firstname']");
+        let lastname = document.querySelector("[name='lastname']");
+        let phone = document.querySelector("[name='phone']");
+        firstname.onchange();
+        lastname.onchange();
+        phone.onchange();
+        // valideazaPrenume(firstname);
+        // valideazaNume(lastname);
+        //valideazaTelefon(phone);
+        let gender = document.querySelector("[name='gender']:checked");
+        if (gender === null) {
+          //atunci nu e bifat genderul
+          let allGender = document.querySelectorAll("[name='gender']");
+          for (let radio of allGender) {
+            radio.classList.add("error");
+          }
+        } else {
+          let allGender = document.querySelectorAll("[name='gender']");
+          for (let radio of allGender) {
+            radio.classList.remove("error");
+          }
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <form onsubmit="valideazaFormular(event);">
+      <label>
+        Prenume:
+        <input
+          type="text"
+          name="firstname"
+          placeholder="FirstName"
+          onchange="valideazaPrenume(this)"
+          onfocus="showError(this,true)"
+        />
+        <span class="errorMessage"></span> </label
+      ><br />
+      <label>
+        Nume:
+        <input
+          type="text"
+          name="lastname"
+          placeholder="LastName"
+          onchange="valideazaNume(this)"
+          onfocus="showError(this,true)"
+        />
+        <span class="errorMessage"></span>
+      </label>
+      <br />
+      <label>
+        Numar telefon:
+        <input
+          type="text"
+          name="phone"
+          placeholder="0712345678"
+          onchange="valideazaTelefon(this)"
+          onfocus="showError(this,true)"
+        />
+        <span class="errorMessage"></span>
+      </label>
+      <br />
+      <label>Male<input type="radio" name="gender" value="male" /></label>
+      <label>Female<input type="radio" name="gender" value="female" /></label>
+      <br />
+      <label>
+        <input type="checkbox" name="tos" value="agree" />
+        Accept terms of service
+      </label>
+      <br />
+      <input type="submit" value="Salveaza" />
+    </form>
+  </body>
+</html>
