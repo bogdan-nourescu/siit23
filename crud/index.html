@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD</title>
+    <script src="index.js"></script>
+  </head>
+  <body onload="draw();">
+    <form onsubmit="adauga(event);">
+      <div><input type="text" placeholder="Title" name="title" /></div>
+
+      <div><input type="text" placeholder="Url" name="url" /></div>
+      <div>
+        <select name="difficulty">
+          <option value="">[Please chose]</option>
+          <option value="0">Entry Level</option>
+          <option value="1">Easy</option>
+          <option value="2">Medium</option>
+          <option value="3">Hard</option>
+          <option value="4">Hacker</option>
+        </select>
+      </div>
+      <div>
+        <input type="text" placeholder="Tag" name="tags" />
+        <button id="addTagBtn" onclick="addTag(event);">+</button>
+      </div>
+      <input type="submit" value="Adauga" />
+    </form>
+    <table border="1" style="border-collapse: collapse; width: 100%" id="list">
+      <thead>
+        <tr>
+          <th style="width: 40%">Title</th>
+          <th style="width: 20%">Difficulty</th>
+          <th>Tags</th>
+          <th style="width: 100px"></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </body>
+</html>
