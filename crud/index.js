@@ -1,31 +1,34 @@
 let state = {
   list: [
     {
-      title: "Google",
+      title: "google",
       url: "https://google.com",
-      difficulty: "2",
+      difficulty: "3",
       tags: ["JS", "HTML"],
     },
     {
       title: "Google2",
       url: "https://google.com",
-      difficulty: "2",
-      tags: ["JS", "HTML"],
+      difficulty: "1",
+      tags: ["JSasd", "HTML"],
     },
     {
       title: "Google3",
       url: "https://google.com",
-      difficulty: "2",
-      tags: ["JS", "HTML"],
+      difficulty: "4",
+      tags: ["js", "HTML"],
     },
     {
       title: "Google4",
       url: "https://google.com",
-      difficulty: "2",
-      tags: ["JS", "HTML"],
+      difficulty: "0",
+      tags: ["HTML", "JS"],
     },
   ],
   idxEdit: null,
+  sortColumn: null,
+  sortDirection: 1, //1 e asc, -1 e desc
+
   difficulty: {
     "": "",
     0: "Entry Level",
@@ -35,6 +38,65 @@ let state = {
     4: "Hacker",
   },
 };
+
+function sortTable(th, column) {
+  //persoana.nume
+  //persoana["nume"]
+  //persoana[coloana]
+  //persoana["pre"+"nume"]
+  //persoana["varsta"+i]
+  let sortDirectionSpans = document.querySelectorAll(".sortDirection");
+  for (let span of sortDirectionSpans) {
+    span.innerText = "";
+  }
+
+  if (state.sortColumn === column) {
+    state.sortDirection = -state.sortDirection;
+  } else {
+    state.sortDirection = 1;
+  }
+  state.sortColumn = column;
+
+  // if (state.sortDirection === 1) {
+  //   th.querySelector(".sortDirection").innerHTML = "&darr;";
+  // } else {
+  //   th.querySelector(".sortDirection").innerHTML = "&uarr;";
+  // }
+
+  th.querySelector(".sortDirection").innerHTML =
+    state.sortDirection === 1 ? "&darr;" : "&uarr;";
+
+  state.list.sort(function (a, b) {
+    let columnA = a[column];
+    let columnB = b[column];
+    if (columnA instanceof Array) {
+      columnA = columnA.join();
+    }
+    if (columnB instanceof Array) {
+      columnB = columnB.join();
+    }
+    columnA = columnA.toLowerCase();
+    columnB = columnB.toLowerCase();
+
+    if (a[column] < b[column]) {
+      return -1 * state.sortDirection;
+    } else if (a[column] > b[column]) {
+      return 1 * state.sortDirection;
+    } else {
+      return 0;
+    }
+  });
+
+  draw();
+}
+
+//O functie "compare" care primeste 2 parametrii si
+//returneaza -1 daca primul e mai mic ca al doilea, <<returneaza mai mic decat 0>>
+//0 daca sunt egale si
+//1 daca primul e mai mare ca al doilea <<returneaza mai mare decat 0>>
+function compare(a, b) {
+  return a - b;
+}
 
 function draw() {
   let table = document.querySelector("#list tbody");
