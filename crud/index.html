@@ -9,6 +9,10 @@
       .hidden {
         display: none;
       }
+      .searchField {
+        width: 100%;
+        box-sizing: border-box;
+      }
     </style>
     <script src="index.js"></script>
   </head>
@@ -34,13 +38,25 @@
         </button>
       </div>
       <input type="submit" value="Salveaza" />
-      <input type="button" value="Anuleaza" onclick="resetForm();" />
+      <input type="button" value="Anuleaza" onclick="showTable();" />
     </form>
     <table id="list" border="1" style="border-collapse: collapse; width: 100%">
       <thead>
         <tr>
           <th style="width: 40%" onclick="sortTable(this,'title')">
-            <button onclick="showForm();" style="float: left">+</button>Title
+            <button
+              onclick="event.stopPropagation();showForm();"
+              style="float: left"
+            >
+              +
+            </button>
+            <button
+              onclick="event.stopPropagation();delAll();"
+              style="float: left"
+            >
+              Del
+            </button>
+            Title
             <span class="sortDirection"></span>
           </th>
           <th style="width: 20%" onclick="sortTable(this,'difficulty')">
@@ -49,6 +65,33 @@
           </th>
           <th onclick="sortTable(this,'tags')">
             Tags<span class="sortDirection"></span>
+          </th>
+          <th style="width: 100px"></th>
+        </tr>
+        <tr>
+          <th>
+            <input
+              type="text"
+              class="searchField"
+              placeholder="Title"
+              oninput="search(this,'title')"
+            />
+          </th>
+          <th>
+            <input
+              type="text"
+              class="searchField"
+              placeholder="Difficulty"
+              oninput="search(this,'difficulty')"
+            />
+          </th>
+          <th>
+            <input
+              type="text"
+              class="searchField"
+              placeholder="Tags"
+              oninput="search(this,'tags')"
+            />
           </th>
           <th style="width: 100px"></th>
         </tr>

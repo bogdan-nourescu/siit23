@@ -25,6 +25,11 @@ let state = {
       tags: ["HTML", "JS"],
     },
   ],
+  search: {
+    title: "",
+    difficulty: "",
+    tags: "",
+  },
   idxEdit: null,
   sortColumn: null,
   sortDirection: 1, //1 e asc, -1 e desc
@@ -39,6 +44,11 @@ let state = {
   },
 };
 
+function search(input, column) {
+  let searchVal = input.value;
+  state.search[column] = searchVal.toLowerCase();
+  draw();
+}
 function sortTable(th, column) {
   //persoana.nume
   //persoana["nume"]
@@ -103,9 +113,26 @@ function draw() {
   let str = "";
   for (let i = 0; i < state.list.length; i++) {
     let elem = state.list[i];
+    if (!elem.title.toLowerCase().includes(state.search.title)) {
+      continue;
+    }
+    if (
+      !elem.difficulty.toLowerCase().includes(state.search.difficulty) &&
+      !state.difficulty[elem.difficulty]
+        .toLowerCase()
+        .includes(state.search.difficulty)
+    ) {
+      continue;
+    }
+    if (!elem.tags.join(", ").toLowerCase().includes(state.search.tags)) {
+      continue;
+    }
     str += `
             <tr>
-                <td><a href="${elem.url}" target="_blank">${elem.title}</a></td>
+                <td>
+                  <input type="checkbox" name="deleteAll" idx="${i}" />
+                  <a href="${elem.url}" target="_blank">${elem.title}</a>
+                </td>
                 <td>${state.difficulty[elem.difficulty]}</td>
                 <td>${elem.tags.join(", ")}</td>
                 <td>
@@ -210,4 +237,29 @@ function resetForm() {
 
   state.idxEdit = null;
   showForm();
+}
+function delAll() {
+  let checkboxes = document.querySelectorAll(
+    "input[type=checkbox][name=deleteAll]:checked"
+  );
+  if (
+    checkboxes.length === 0 ||
+    !confirm(`Esti sigur ca vrei sa stergi ${checkboxes.length} linkuri?`)
+  ) {
+    return;
+  }
+  for (let i = checkboxes.length - 1; i >= 0; i--) {
+    state.list.splice(Number(checkboxes[i].getAttribute("idx")), 1);
+  }
+  draw();
+}
+
+async function getFromFirebase() {
+  let url =
+    "https://linkuri-siit-23-default-rtdb.europe-west1.firebasedatabase.app/.json";
+  let response = await fetch(url);
+  //let serverResponseText = await response.text();
+  let serverResponseJSON = await response.json();
+  //console.log(serverResponseText);
+  console.log(serverResponseJSON);
 }
