@@ -1,30 +1,5 @@
 let state = {
-  list: [
-    {
-      title: "google",
-      url: "https://google.com",
-      difficulty: "3",
-      tags: ["JS", "HTML"],
-    },
-    {
-      title: "Google2",
-      url: "https://google.com",
-      difficulty: "1",
-      tags: ["JSasd", "HTML"],
-    },
-    {
-      title: "Google3",
-      url: "https://google.com",
-      difficulty: "4",
-      tags: ["js", "HTML"],
-    },
-    {
-      title: "Google4",
-      url: "https://google.com",
-      difficulty: "0",
-      tags: ["HTML", "JS"],
-    },
-  ],
+  list: [],
   search: {
     title: "",
     difficulty: "",
@@ -42,6 +17,8 @@ let state = {
     3: "Hard",
     4: "Hacker",
   },
+  databaseUrl:
+    "https://linkuri-siit-23-default-rtdb.europe-west1.firebasedatabase.app/",
 };
 
 function search(input, column) {
@@ -111,8 +88,16 @@ function compare(a, b) {
 function draw() {
   let table = document.querySelector("#list tbody");
   let str = "";
-  for (let i = 0; i < state.list.length; i++) {
-    let elem = state.list[i];
+
+  for (let [i, elem] of Object.entries(state.list)) {
+    //for (let i = 0; i < state.list.length; i++) {
+    //let elem = state.list[i];
+    if (elem === null) {
+      continue;
+    }
+    if (elem.tags === undefined) {
+      elem.tags = [];
+    }
     if (!elem.title.toLowerCase().includes(state.search.title)) {
       continue;
     }
@@ -136,8 +121,8 @@ function draw() {
                 <td>${state.difficulty[elem.difficulty]}</td>
                 <td>${elem.tags.join(", ")}</td>
                 <td>
-                    <button onclick="del(${i})">Delete</button>
-                    <button onclick="edit(${i})">Edit</button>
+                    <button onclick="del('${i}')">Delete</button>
+                    <button onclick="edit('${i}')">Edit</button>
                 </td>
             </tr>
         `;
@@ -165,15 +150,21 @@ function edit(idx) {
   state.idxEdit = idx;
 }
 
-function del(idx) {
+async function del(idx) {
   if (
     confirm(`Esti sigur ca vrei sa stergi linkul: ${state.list[idx].title}?`)
   ) {
-    state.list.splice(idx, 1);
-    draw();
+    //state.list.splice(idx, 1);
+    //https:// .... .com/2/.json
+    let url = state.databaseUrl + idx + "/" + ".json";
+    let response = await fetch(url, {
+      method: "DELETE",
+    });
+
+    await getData();
   }
 }
-function adauga(event) {
+async function adauga(event) {
   event.preventDefault();
   let title = document.querySelector("[name='title']").value.trim();
   let url = document.querySelector("[name='url']").value.trim();
@@ -187,24 +178,48 @@ function adauga(event) {
   }
   if (state.idxEdit === null) {
     //vreau sa adaug un element nou in lista
-    state.list.push({
-      title: title,
-      url: url,
-      difficulty: difficulty,
-      tags: tags,
+    // state.list.push({
+    //   title: title,
+    //   url: url,
+    //   difficulty: difficulty,
+    //   tags: tags,
+    // });
+
+    let response = await fetch(state.databaseUrl + ".json", {
+      method: "POST",
+      body: JSON.stringify({
+        title: title,
+        url: url,
+        difficulty: difficulty,
+        tags: tags,
+      }),
     });
   } else {
     //aici sunt in timpul editarii
-    state.list[state.idxEdit] = {
-      title: title,
-      url: url,
-      difficulty: difficulty,
-      tags: tags,
-    };
+    // state.list[state.idxEdit] = {
+    //   title: title,
+    //   url: url,
+    //   difficulty: difficulty,
+    //   tags: tags,
+    // };
+
+    let response = await fetch(
+      state.databaseUrl + state.idxEdit + "/" + ".json",
+      {
+        method: "PUT",
+        body: JSON.stringify({
+          title: title,
+          url: url,
+          difficulty: difficulty,
+          tags: tags,
+        }),
+      }
+    );
+
     state.idxEdit = null;
   }
   document.querySelector("form").reset();
-  draw();
+  await getData();
 }
 function addTag() {
   let button = document.querySelector("#addTagBtn");
@@ -254,12 +269,10 @@ function delAll() {
   draw();
 }
 
-async function getFromFirebase() {
-  let url =
-    "https://linkuri-siit-23-default-rtdb.europe-west1.firebasedatabase.app/.json";
+async function getData() {
+  let url = state.databaseUrl + ".json";
   let response = await fetch(url);
-  //let serverResponseText = await response.text();
-  let serverResponseJSON = await response.json();
-  //console.log(serverResponseText);
-  console.log(serverResponseJSON);
+  let list = await response.json();
+  state.list = list;
+  draw();
 }
