@@ -53,27 +53,6 @@ function sortTable(th, column) {
   th.querySelector(".sortDirection").innerHTML =
     state.sortDirection === 1 ? "&darr;" : "&uarr;";
 
-  state.list.sort(function (a, b) {
-    let columnA = a[column];
-    let columnB = b[column];
-    if (columnA instanceof Array) {
-      columnA = columnA.join();
-    }
-    if (columnB instanceof Array) {
-      columnB = columnB.join();
-    }
-    columnA = columnA.toLowerCase();
-    columnB = columnB.toLowerCase();
-
-    if (a[column] < b[column]) {
-      return -1 * state.sortDirection;
-    } else if (a[column] > b[column]) {
-      return 1 * state.sortDirection;
-    } else {
-      return 0;
-    }
-  });
-
   draw();
 }
 
@@ -88,8 +67,32 @@ function compare(a, b) {
 function draw() {
   let table = document.querySelector("#list tbody");
   let str = "";
+  let column = state.sortColumn;
+  let array = Object.entries(state.list);
+  if (column !== null) {
+    array.sort(function ([keyA, a], [keyB, b]) {
+      let columnA = a[column];
+      let columnB = b[column];
+      if (columnA instanceof Array) {
+        columnA = columnA.join();
+      }
+      if (columnB instanceof Array) {
+        columnB = columnB.join();
+      }
+      columnA = columnA.toLowerCase();
+      columnB = columnB.toLowerCase();
 
-  for (let [i, elem] of Object.entries(state.list)) {
+      if (a[column] < b[column]) {
+        return -1 * state.sortDirection;
+      } else if (a[column] > b[column]) {
+        return 1 * state.sortDirection;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  for (let [i, elem] of array) {
     //for (let i = 0; i < state.list.length; i++) {
     //let elem = state.list[i];
     if (elem === null) {
@@ -253,7 +256,7 @@ function resetForm() {
   state.idxEdit = null;
   showForm();
 }
-function delAll() {
+async function delAll() {
   let checkboxes = document.querySelectorAll(
     "input[type=checkbox][name=deleteAll]:checked"
   );
@@ -264,15 +267,25 @@ function delAll() {
     return;
   }
   for (let i = checkboxes.length - 1; i >= 0; i--) {
-    state.list.splice(Number(checkboxes[i].getAttribute("idx")), 1);
+    //state.list.splice(Number(checkboxes[i].getAttribute("idx")), 1);
+    let idx = checkboxes[i].getAttribute("idx");
+    let url = state.databaseUrl + idx + "/" + ".json";
+    let response = await fetch(url, {
+      method: "DELETE",
+    });
   }
-  draw();
+  await getData();
 }
 
 async function getData() {
   let url = state.databaseUrl + ".json";
   let response = await fetch(url);
   let list = await response.json();
-  state.list = list;
-  draw();
+  if (list === null) {
+    state.list = {};
+    showForm();
+  } else {
+    state.list = list;
+    draw();
+  }
 }
