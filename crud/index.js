@@ -64,9 +64,7 @@ function compare(a, b) {
   return a - b;
 }
 
-function draw() {
-  let table = document.querySelector("#list tbody");
-  let str = "";
+function sort() {
   let column = state.sortColumn;
   let array = Object.entries(state.list);
   if (column !== null) {
@@ -91,6 +89,12 @@ function draw() {
       }
     });
   }
+  return array;
+}
+function draw() {
+  let table = document.querySelector("#list tbody");
+  let str = "";
+  let array = sort();
 
   for (let [i, elem] of array) {
     //for (let i = 0; i < state.list.length; i++) {
