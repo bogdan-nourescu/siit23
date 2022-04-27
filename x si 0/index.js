@@ -1,15 +1,6 @@
-let player = true;
-let game = [null, null, null, null, null, null, null, null, null];
-let finished = false;
-
 let state = {
   player: true, //x e true; 0 e false
   game: [null, null, null, null, null, null, null, null, null],
-  game2: [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-  ],
   finished: false,
   displayPlayer: {
     true: "X",

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Studio</title>
+    <script>
+      class Premiu {
+        constructor(nume, an) {
+          this.nume = nume;
+          this.an = an;
+        }
+      }
+      class Actor {
+        constructor(nume, varsta, premii) {
+          this.nume = nume;
+          this.varsta = varsta;
+          this.premii = premii;
+        }
+      }
+      class Film {
+        constructor(an_aparitie, nume, actori) {
+          this.an_aparitie = an_aparitie;
+          this.nume = nume;
+          this.actori = actori;
+        }
+      }
+      class Studio {
+        constructor(nume, filme) {
+          this.nume = nume;
+          this.filme = filme;
+        }
+      }
+      var oscar1990 = new Premiu("oscar", 1990);
+      var oscar2000 = new Premiu("oscar", 2000);
+      var oscar2010 = new Premiu("oscar", 2010);
+      var oscar2018 = new Premiu("oscar", 2018);
+
+      var actorOscar1990 = new Actor("actor cu 2 oscaruri", 35, [
+        oscar1990,
+        oscar2000,
+      ]);
+      var actorOscar2010 = new Actor("actor cu oscar din 2000", 55, [
+        oscar2010,
+      ]);
+      var actorOscar2018 = new Actor("actor cu oscar din 2018", 23, [
+        oscar2018,
+      ]);
+      var actorFaraPremii01 = new Actor("actor fara oscar 01", 33, []);
+      var actorFaraPremii02 = new Actor("actor fara oscar 02", 60, []);
+      var actorFaraPremii03 = new Actor("actor fara oscar 02", 20, []);
+
+      var film1 = new Film(1990, "film cu actori de oscar", [
+        actorOscar1990,
+        actorFaraPremii01,
+      ]);
+      var film2 = new Film(2010, "film cu actori fara premii2", [
+        actorFaraPremii01,
+        actorFaraPremii02,
+        actorFaraPremii03,
+      ]);
+      var film3 = new Film(2010, "film cu actori fara premii3", [
+        actorFaraPremii01,
+        actorFaraPremii02,
+        actorFaraPremii03,
+      ]);
+      var film4 = new Film(2018, "film cu actori de oscar", [
+        actorOscar2010,
+        actorOscar2018,
+        actorFaraPremii02,
+      ]);
+      var film5 = new Film(2018, "film cu actori fara premii5", [
+        actorFaraPremii02,
+        actorFaraPremii03,
+      ]);
+
+      var studio1 = new Studio("MGM", [film1, film2]);
+      var studio2 = new Studio("Disney", [film3, film4, film5]);
+
+      var studioDatabase = [studio1, studio2];
+      console.log(
+        "=========afisati numele studiourilor care au publicat mai mult de 2 filme"
+      );
+      for (let studio of studioDatabase) {
+        if (studio.filme.length > 2) {
+          console.log(studio.nume);
+        }
+      }
+      console.log(
+        `=========afisati numele studiourilor in care joaca actorul cu numele "actor cu 2 oscaruri"`
+      );
+
+      for (let studio of studioDatabase) {
+        for (let film of studio.filme) {
+          for (let actor of film.actori) {
+            if (actor.nume === "actor cu 2 oscaruri") {
+              console.log(studio.nume);
+              break;
+            }
+          }
+        }
+      }
+      console.log(
+        `=========afisati numele filmelor in care joca cel putin un actor cu varsta de peste 50 de ani"`
+      );
+
+      for (let studio of studioDatabase) {
+        for (let film of studio.filme) {
+          for (let actor of film.actori) {
+            if (actor.varsta > 50) {
+              console.log(film.nume);
+              break;
+            }
+          }
+        }
+      }
+      console.log(
+        `========= afisati numele filmelor in care exista cel putin un actor care a luat cel putin un premiu si numele actorilor respectivi cu virgula intre ei`
+      );
+
+      for (let studio of studioDatabase) {
+        for (let film of studio.filme) {
+          let numeActori = [];
+          for (let actor of film.actori) {
+            if (actor.premii.length > 0) {
+              numeActori.push(`'${actor.nume}'`);
+            }
+          }
+          if (numeActori.length > 0) {
+            console.log(
+              `Filmul studioului "${studio.nume}" "${film.nume}" din anul ${
+                film.an_aparitie
+              } cu actorii ${numeActori.join(", ")}`
+            );
+          }
+        }
+      }
+    </script>
+  </head>
+  <body></body>
+</html>

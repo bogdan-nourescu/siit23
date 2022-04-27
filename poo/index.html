@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>POO</title>
+    <script>
+      class Masina {
+        #viteza = 0; //# inseamna ca este privata, adica nu se poate accesa decat din interiorul clasei
+        putereMotor = 100; //publica
+
+        constructor({
+          tipMasina = "dacia",
+          culoare = "alb",
+          nrUsi = 4,
+          putere = 50,
+          greutate = 1200,
+        } = {}) {
+          if (greutate < 200) {
+            throw new Error("Greutatea este prea mica");
+          }
+          this.tipMasina = tipMasina;
+          this.culoare = culoare;
+          this.nrUsi = nrUsi;
+          this.putereMotor = putere;
+          this.greutate = greutate;
+        }
+        accelereaza(coeficient) {
+          if (coeficient == undefined) {
+            this.#viteza++;
+          } else {
+            this.#viteza += coeficient;
+          }
+        }
+        franeaza(coeficient = 1) {
+          if (this.viteza > coeficient) {
+            this.#viteza -= coeficient;
+          } else {
+            this.#viteza = 0;
+          }
+        }
+      }
+
+      let masina = new Masina();
+      masina.accelereaza();
+      masina.accelereaza();
+      masina.putereMotor = 200;
+
+      try {
+        let masina3 = new Masina({
+          greutate: 100,
+        });
+        masina3.accelereaza();
+        masina3.franeaza();
+        masina3.franeaza();
+
+        console.log(masina3);
+      } catch (e) {
+        console.log(e);
+        if (e.message === "Greutatea este prea mica") {
+          //......
+        }
+      }
+      console.log(masina);
+
+      let masina2 = {
+        tipMasina: "Opel",
+        culoare: "negru",
+        viteza: 0,
+      };
+      masina2.viteza++;
+      masina2.viteza++;
+
+      console.log(masina2);
+    </script>
+  </head>
+  <body></body>
+</html>
