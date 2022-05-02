@@ -1,0 +1,5 @@
+{
+  "player": true,
+  "game": [null, null, null, null, null, null, null, null, null],
+  "finished": false
+}
