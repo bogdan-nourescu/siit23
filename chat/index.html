@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat</title>
+
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+
+    <script src="index.js" type="module"></script>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="signUpForm">
+      <form onsubmit="event.preventDefault();startChat();">
+        <label>
+          Name:<input
+            type="text"
+            placeholder="John Doe"
+            name="name"
+            value="Bogdan"
+          /> </label
+        ><br />
+        <input type="submit" value="Start Chat" />
+      </form>
+    </div>
+    <div id="chatContainer" class="hidden">
+      <div id="chat">
+        <!--
+        <div class="chatBubble self">
+          <div class="userName">Bogdan</div>
+          <div class="message">Cursul de frontend e foarte misto</div>
+          <div class="time">19:34</div>
+        </div>
+        <div class="chatBubble self">
+          <div class="userName">Bogdan</div>
+          <div class="message">Cursul de frontend e foarte misto</div>
+          <div class="time">19:34</div>
+        </div>
+        <div class="chatBubble other">
+          <div class="userName">Bogdan</div>
+          <div class="message">Cursul de frontend e foarte misto</div>
+          <div class="time">19:34</div>
+        </div>
+        <div class="chatBubble self">
+          <div class="userName">Bogdan</div>
+          <div class="message">Cursul de frontend e foarte misto</div>
+          <div class="time">19:34</div>
+        </div>
+        <div class="chatBubble other">
+          <div class="userName">John Doe</div>
+          <div class="message">Cursul de frontend e foarte misto</div>
+          <div class="time">19:34</div>
+        </div>
+        -->
+      </div>
+      <div id="controls">
+        <form onsubmit="event.preventDefault();addMessage();">
+          <textarea id="chatMessage" name="chatMessage"></textarea>
+          <button>
+            <img src="images/sendIcon.svg" style="width: 40px; height: 40px" />
+          </button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

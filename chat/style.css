@@ -1,0 +1,72 @@
+:root {
+  --shadow-rgb: 11, 20, 26;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.error {
+  border-color: red;
+}
+
+#chatContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+#chat {
+  flex: 1;
+  background-color: #f3efe9;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+#controls > form {
+  display: flex;
+  flex-direction: row;
+}
+#chatMessage {
+  flex: 1;
+}
+.chatBubble {
+  border: 1px solid #f4db6b;
+  border-radius: 30px;
+  padding: 3px 20px;
+  margin-top: 10px;
+  width: fit-content;
+  max-width: 90%;
+  box-shadow: 0 1px 0.5px rgba(var(--shadow-rgb), 0.13);
+}
+.chatBubble.self {
+  align-self: flex-end;
+  background-color: #d1f4cc;
+}
+.chatBubble.self > .userName {
+  display: none;
+}
+.chatBubble.self + .chatBubble.self {
+  margin-top: 0px;
+}
+
+.chatBubble.other {
+  align-self: flex-start;
+  background-color: #ffffff;
+}
+.chatBubble > .time {
+  float: right;
+  font-size: 0.7rem;
+}
+.chatBubble > .userName {
+  font-style: italic;
+  color: #53bdeb;
+  font-size: 0.9rem;
+}
