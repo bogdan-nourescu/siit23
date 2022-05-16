@@ -1,3 +1,4 @@
+"use strict";
 let state = {
   player: true, //x e true; 0 e false
   game: [null, null, null, null, null, null, null, null, null],

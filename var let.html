@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      function a() {
+        var i;
+        for (i = 0; i < 5; i++) {
+          var f = 5;
+          console.log(i);
+        }
+
+        i = 5;
+
+        if (true) {
+          let b = 7;
+        }
+        //aici nu exista variabila B
+        //variabila F este vizibila
+      }
+
+      function x() {
+        var a = 5;
+        if (true) {
+          var a = 7;
+          a++;
+        }
+        console.log(a); //aici a este 8
+      }
+
+      function x() {
+        var a, b, i, j, k;
+        a = 5;
+        if (true) {
+          a = 7;
+          a++;
+        }
+        console.log(a); //aici a este 8
+      }
+      x2();
+      function x2() {
+        let a = 5;
+        if (true) {
+          let a = 7;
+          a++;
+        }
+        console.log(a); //aici a este 5
+      }
+      x3();
+
+      const x3 = () => {
+        //....
+      };
+
+      setTimeout(() => {
+        console.log("after 500ms");
+      }, 500);
+
+      [].forEach(() => {});
+
+      for (let [key, value] of Object.entries(obj)) {
+      }
+
+      let arr = [1, 2, 3];
+      let arr2 = [4, 5, 6];
+      let arr4 = [...arr2, ...arr];
+      let arr3 = [7, ...arr];
+
+      let [elem1, elem2] = arr;
+      let [e1, ...e2] = arr;
+
+      let a1 = 5;
+      let a2 = 6;
+
+      // let temp = a1;
+      // a1=a2;
+      // a2=temp;
+      [a1, a2] = [a2, a1];
+
+      let persoana = {
+        nume: "Nourescu",
+        prenume: "Bogdan",
+      };
+
+      let persoana2 = {
+        varsta: 33,
+        prenume: "Florin",
+        ...persoana,
+      };
+
+      let setari = {
+        inaltime: 5,
+        culoare: "red",
+        ...setariUtilizator,
+      };
+
+      function f({ p1 = 5, p2 = 9 }) {
+        arguments;
+      }
+
+      f({
+        p1: 1,
+      });
+    </script>
+  </head>
+  <body></body>
+</html>
