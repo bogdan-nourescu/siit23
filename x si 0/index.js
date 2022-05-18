@@ -13,6 +13,10 @@ let state = {
   },
 };
 
+function nextPlayer() {
+  state.player = !state.player;
+}
+
 function play(pos) {
   if (state.finished) {
     newGame();
@@ -36,7 +40,7 @@ function play(pos) {
     return;
   }
 
-  state.player = !state.player;
+  nextPlayer();
   showMessage(`It's players ${state.displayPlayer[state.player]}'s turn!`);
   let isDraw = true;
   for (let g of state.game) {
