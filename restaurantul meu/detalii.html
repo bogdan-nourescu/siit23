@@ -55,6 +55,45 @@
 			
 			document.querySelector("#ingrediente").innerHTML = ingrediente;
 		}
+
+
+	function adaugaInCos() {
+		let idProdus = index
+        let cantitate = document.querySelector("[name=cantitate]").value;
+        cantitate = Number(cantitate);
+        if (isNaN(cantitate) || cantitate <= 0) {
+          document.querySelector("[name=cantitate]").classList.add("invalid");
+          alert("Nu e cantitatea buna");
+          return;
+        }
+        let produs = {
+          idProdus: idProdus,
+          nume: preparat.nume,
+		  poza:preparat.imagine,
+          pret: 50,
+          cantitate: cantitate,
+        };
+
+        let cos = localStorage.getItem("cos");
+        if (cos === null) {
+          cos = [];
+        } else {
+          cos = JSON.parse(cos);
+        }
+        let found = false;
+        for (let p of cos) {
+          if (p.idProdus === produs.idProdus) {
+            p.cantitate += produs.cantitate;
+            found = true;
+          }
+        }
+        if (!found) {
+          cos.push(produs);
+        }
+
+        localStorage.setItem("cos", JSON.stringify(cos));
+      }
+
 	</script>
 </head>
 <body onload="getLista();">
@@ -73,6 +112,8 @@
 				
 			</p>
 		</div>
+		<input type="number" name="cantitate" />
+    	<button onclick="adaugaInCos()">Adauga in cos</button>
 	<div>
 </body>
 </html>

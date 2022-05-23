@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Local Storage</title>
+    <script>
+      //let cos = localStorage.getItem("cos");
+
+      //localStorage.setItem("cos", "Merge set Item");
+
+      function adaugaInCos() {
+        let cantitate = document.querySelector("[name=cantitate]").value;
+        cantitate = Number(cantitate);
+        if (isNaN(cantitate) || cantitate <= 0) {
+          document.querySelector("[name=cantitate]").classList.add("invalid");
+          alert("Nu e cantitatea buna");
+          return;
+        }
+        let produs = {
+          idProdus: 1,
+          nume: "Pantofi",
+          pret: 50,
+          cantitate: cantitate,
+        };
+
+        let cos = localStorage.getItem("cos");
+        if (cos === null) {
+          cos = [];
+        } else {
+          cos = JSON.parse(cos);
+        }
+        let found = false;
+        for (let p of cos) {
+          if (p.idProdus === produs.idProdus) {
+            p.cantitate += produs.cantitate;
+            found = true;
+          }
+        }
+        if (!found) {
+          cos.push(produs);
+        }
+
+        localStorage.setItem("cos", JSON.stringify(cos));
+      }
+      function deleteItem(idProdus) {
+        let cos = localStorage.getItem("cos");
+        if (cos === null) {
+          cos = [];
+        } else {
+          cos = JSON.parse(cos);
+        }
+        for (let i = 0; i < cos.length; i++) {
+          let p = cos[i];
+          if (idProdus === p.idProdus) {
+            cos.splice(i, 1);
+            break;
+          }
+        }
+
+        localStorage.setItem("cos", JSON.stringify(cos));
+      }
+    </script>
+  </head>
+  <body>
+    <input type="number" name="cantitate" />
+    <button onclick="adaugaInCos()">Adauga in cos</button>
+    <button onclick="deleteItem(1)">Sterge in cos</button>
+  </body>
+</html>
