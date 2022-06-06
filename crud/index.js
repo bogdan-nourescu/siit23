@@ -139,8 +139,10 @@ function draw() {
 }
 
 function edit(idx) {
-  showForm();
-
+  showForm(idx);
+  editForm(idx);
+}
+function editForm(idx) {
   let elem = state.list[idx];
   document.querySelector("[name='title']").value = elem.title;
   document.querySelector("[name='url']").value = elem.url;
@@ -236,11 +238,26 @@ function addTag() {
   );
 }
 
+window.addEventListener("popstate", (event) => {
+  console.log(event.state);
+
+  if (event.state === null || event.state.page === "table") {
+    document.querySelector("#list").classList.remove("hidden");
+    document.querySelector("#form").classList.add("hidden");
+  } else if (event.state.page === "form") {
+    document.querySelector("#list").classList.add("hidden");
+    document.querySelector("#form").classList.remove("hidden");
+    editForm(event.state.idxEdit);
+  }
+});
+
 function showTable() {
+  window.history.pushState({ page: "table" }, "", "#table");
   document.querySelector("#list").classList.remove("hidden");
   document.querySelector("#form").classList.add("hidden");
 }
-function showForm() {
+function showForm(idx) {
+  window.history.pushState({ page: "form", idxEdit: idx }, "", "#form");
   document.querySelector("#list").classList.add("hidden");
   document.querySelector("#form").classList.remove("hidden");
 }
@@ -293,3 +310,31 @@ async function getData() {
     draw();
   }
 }
+
+class Persoana {
+  #dataNastere;
+  constructor() {}
+
+  set dataNastere(val) {
+    this.#dataNastere = val;
+  }
+  set varsta(val) {
+    if (val >= 0 && val <= 120) {
+      this.#dataNastere = 2022 - val + "-01-01";
+    } else {
+      throw new Error("Varsta nu este corecta");
+    }
+  }
+  get varsta() {
+    return 2022 - this.#dataNastere.substring(0, 4) * 1;
+  }
+  get dataNastere() {
+    return this.#dataNastere;
+  }
+}
+
+let p = new Persoana();
+p.dataNastere = "1988-07-01";
+p.varsta = 100;
+console.log(p.dataNastere);
+console.log(p.varsta);
