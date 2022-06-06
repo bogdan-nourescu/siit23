@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+    <script src="https://unpkg.com/dayjs@1.8.21/plugin/customParseFormat.js"></script>
     <script>
+      dayjs.extend(window.dayjs_plugin_customParseFormat);
       //day-month-year
       //sort ascending
       let arr = [
@@ -26,6 +28,12 @@
           data: "12-10-2000",
         },
       ];
+      arr.sort((a, b) => {
+        console.log(a.data, dayjs(a.data, "DD-MM-YYYY"));
+        return dayjs(a.data, "DD-MM-YYYY").diff(dayjs(b.data, "DD-MM-YYYY"));
+      });
+      console.log(arr);
+      console.log(dayjs().format("YYYY-MM-DD"));
     </script>
   </head>
   <body></body>
