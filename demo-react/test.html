@@ -13,7 +13,10 @@
       //sort ascending
       let arr = [
         {
-          data: "15-06-1985",
+          data: "15-08-1985",
+        },
+        {
+          data: "15-07-1985",
         },
         {
           data: "25-07-1976",
@@ -28,10 +31,26 @@
           data: "12-10-2000",
         },
       ];
+      // arr.sort((a, b) => {
+      //   //console.log(a.data, dayjs(a.data, "DD-MM-YYYY"));
+      //   return dayjs(a.data, "DD-MM-YYYY").diff(dayjs(b.data, "DD-MM-YYYY"));
+      // });
       arr.sort((a, b) => {
-        console.log(a.data, dayjs(a.data, "DD-MM-YYYY"));
-        return dayjs(a.data, "DD-MM-YYYY").diff(dayjs(b.data, "DD-MM-YYYY"));
+        aY = a.data.substring(6, 10) * 1;
+        aM = a.data.substring(3, 5) * 1;
+        aD = a.data.substring(0, 2) * 1;
+        bY = b.data.substring(6, 10) * 1;
+        bM = b.data.substring(3, 5) * 1;
+        bD = b.data.substring(0, 2) * 1;
+        if (aY !== bY) {
+          return aY - bY;
+        }
+        if (aM !== bM) {
+          return aM - bM;
+        }
+        return aD - bD;
       });
+
       console.log(arr);
       console.log(dayjs().format("YYYY-MM-DD"));
     </script>
