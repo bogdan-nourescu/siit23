@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      let order = true;
+      function swapButtons() {
+        let div = document.querySelector("#buttonContainer");
+        let buttonDa = document.querySelector("#da");
+        let buttonNu = document.querySelector("#nu");
+        div.removeChild(buttonDa);
+        div.removeChild(buttonNu);
+        order = !order;
+        setTimeout(() => {
+          if (order) {
+            div.appendChild(buttonDa);
+            div.appendChild(buttonNu);
+          } else {
+            div.appendChild(buttonNu);
+            div.appendChild(buttonDa);
+          }
+        }, 0);
+      }
+    </script>
+    <style>
+      #da,
+      #nu {
+        margin-left: 20px;
+        float: left;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Are you ....?</h2>
+    <div id="buttonContainer">
+      <button id="da" style="color: red">Da</button>
+      <button id="nu" style="color: green" onmouseover="swapButtons();">
+        Nu
+      </button>
+    </div>
+  </body>
+</html>

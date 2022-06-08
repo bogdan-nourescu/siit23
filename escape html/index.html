@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      function sayHello() {
+        let nume = document.querySelector("[name=nume]").value;
+        nume = nume.replace(/[<]/g, "&lt;").replace(/[>]/g, "&gt;");
+        document.querySelector("#welcome").innerHTML = "Hello " + nume;
+      }
+    </script>
+    <style>
+      :root {
+        --ceva: 20px;
+      }
+      a {
+        font-size: var(--ceva);
+      }
+    </style>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <input type="text" name="nume" />
+    <button onclick="sayHello()">Say Hello</button>
+    <p id="welcome"></p>
+  </body>
+</html>

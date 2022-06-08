@@ -51,6 +51,20 @@
         return aD - bD;
       });
 
+      arr.sort((a, b) => {
+        aY = a.data.substring(6, 10);
+        aM = a.data.substring(3, 5);
+        aD = a.data.substring(0, 2);
+        bY = b.data.substring(6, 10);
+        bM = b.data.substring(3, 5);
+        bD = b.data.substring(0, 2);
+
+        aYMD = aY + "-" + aM + "-" + aD;
+        bYMD = bY + "-" + bM + "-" + bD;
+
+        return aYMD.localeCompare(bYMD);
+      });
+
       console.log(arr);
       console.log(dayjs().format("YYYY-MM-DD"));
     </script>
